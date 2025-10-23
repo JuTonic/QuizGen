@@ -3,6 +3,7 @@ from typing import Generic
 
 from modules.task import QTask
 from modules.utils.types import A, C, Q, V
+from modules.utils.utils import rnd
 from modules.variant import QVariant
 from modules.variant_builder.context import DynamicCtx
 from modules.variant_builder.default_task_selector import LeastUsedTaskSelector
@@ -33,7 +34,10 @@ class VariantFactory(Generic[C, V, Q, A]):
             task_selector if task_selector is not None else LeastUsedTaskSelector()
         )
 
-    def generate_variants(self, number_of_variants: int) -> QVariantSet[C, V, Q, A]:
+    def generate_variants(
+        self, number_of_variants: int, seed: int = 42
+    ) -> QVariantSet[C, V, Q, A]:
+        rnd.seed(seed)
         variant_task_filters: list[Filter[C, V, Q, A]] = [
             b.must.build() for b in self.task
         ]

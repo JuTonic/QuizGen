@@ -55,4 +55,6 @@ class LeastUsedTaskSelector(QTaskSelector[C, V, Q, A]):
 
         self.task_usage_count[least_used_task.id] += 1
 
+        print(min_max_intersections)
+
         return least_used_task
